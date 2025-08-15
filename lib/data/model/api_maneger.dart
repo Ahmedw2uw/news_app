@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:news/data/model/artecle_response.dart';
@@ -11,12 +10,26 @@ class ApiManeger {
   final String baseUrl = "https://newsapi.org/v2";
   final String apiKey = "ca5cfda49cb5405383b81622ca653ddc";
   late Dio dio;
-  ApiManeger() {
+  // ApiManeger() {
+  // } //* obgect from interseptor
+  static ApiManeger? _apiManeger;
+  //! this is a diffrent ideia to add sengelton ideia
+  ApiManeger._() {
+    //! this is a single dio via project (sengelton)
     dio = Dio(
       BaseOptions(queryParameters: {"apiKey": apiKey}, baseUrl: baseUrl),
     );
-    dio.interceptors.add(PrettyDioLogger( requestHeader: true)); //* this is same of the interseptor to print the headders
-  } //* obgect from interseptor
+    dio.interceptors.add(
+      PrettyDioLogger(requestHeader: true),
+    ); //* this is same of the interseptor to print the headders
+  }
+  static ApiManeger get instance {
+    //! this to if any class create object cannot creat wethout this instance function not object
+    if (_apiManeger == null) {
+      _apiManeger = ApiManeger._(); //* hear canot create more than object
+    }
+    return _apiManeger!; //* if alredy created its wel return it
+  }
 
   Future<List<Source>?> loadSources(String category) async {
     try {

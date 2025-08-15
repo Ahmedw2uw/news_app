@@ -8,13 +8,13 @@ import 'package:news/ui/widgets/loading_widget.dart';
 
 class NewsList extends StatelessWidget {
   final Source source;
-  final ApiManeger apiManeger =  ApiManeger();
-   NewsList({super.key, required this.source});
+  //! cannot create object wethout instance  // final ApiManeger apiManeger =  ApiManeger();
+   const NewsList({super.key, required this.source});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: apiManeger.loadArtecles(source.id ?? ""),
+      future: ApiManeger.instance.loadArtecles(source.id ?? ""),//! <= hear the sengelton ideia
       builder: (context, snapShot) {
         if (snapShot.hasError) {
           return ErrorWidget(snapShot.error.toString());
