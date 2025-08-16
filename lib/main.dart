@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
+import 'package:news/data/utilites/hive_adapter/source_adapter.dart';
 import 'package:news/ui/screens/home/home.dart';
 import 'package:news/ui/utilites/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:news/ui/provider/theme_provider.dart';
 
 void main() {
+  Hive.initFlutter();
+  Hive.registerAdapter(SourceAdapter());
+
   runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),

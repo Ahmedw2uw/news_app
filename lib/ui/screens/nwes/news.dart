@@ -1,6 +1,10 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:news/data/model/api_maneger.dart';
 import 'package:news/data/model/sources.dart';
+import 'package:news/data/repositries/data_source/local_datasource.dart';
+import 'package:news/data/repositries/data_source/remot_datasource.dart';
+import 'package:news/data/repositries/news_reposotry.dart';
 import 'package:news/ui/model/category_dm.dart';
 import 'package:news/ui/screens/nwes/news_list.dart';
 import 'package:news/ui/screens/nwes/news_vew_model.dart';
@@ -20,7 +24,9 @@ class News extends StatefulWidget {
 
 class _NewsState extends State<News> {
   // final ApiManeger apiManeger =  ApiManeger(); //* cannot create
-  late NewsVewModel vewModel = NewsVewModel(); //* this is an object of vewModel
+  late NewsVewModel vewModel = NewsVewModel(
+    NewsReposotry(LocalDatasource(),RemotDatasource(apiManeger: ApiManeger.instance),Connectivity())
+  ); //* this is an object of vewModel
 
   // @override
   // void initState() {
